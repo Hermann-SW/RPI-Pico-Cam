@@ -1,6 +1,6 @@
 # Pico4MLcbot hm01b0 camera and st7735 display demo 
 ## Hardware Connection
-![IMAGE ALT TEXT](photos/Pico4MLcbot.15%.jpg)
+![IMAGE ALT TEXT](photos/Pico4MLcbot.15pc.jpg)
 ```
 int PIN_LED = 25;
 int PIN_CAM_SIOC = 5; // I2C0 SCL
@@ -41,4 +41,4 @@ int ESP1_TX         = 1;
 ## Copy the arducam_firmware.uf2 to pico
 
 ## test
-![IMAGE ALT TEXT](photos/20211124_204656.part.20%.jpg)
+![IMAGE ALT TEXT](photos/20211124_204656.part.20pc.jpg)
