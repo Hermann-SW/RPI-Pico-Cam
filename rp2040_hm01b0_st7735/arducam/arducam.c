@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "arducam.h"
-#include "ov2640_init.h"
 #include "hm01b0_init.h"
 #include "hardware/dma.h"
 #include "hardware/i2c.h"
