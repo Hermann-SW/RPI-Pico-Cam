@@ -11,6 +11,9 @@ pico_sdk_init()
 add_executable(arducam_firmware
 	arducam/arducam.c
 	main.c
+	lib/st7735.c
+	lib/fonts.c
+	lib/DEV_Config.c
 )
 
 pico_generate_pio_header(arducam_firmware ${CMAKE_CURRENT_LIST_DIR}/image.pio)
@@ -21,5 +24,6 @@ target_link_libraries(arducam_firmware
 	hardware_i2c
 	hardware_pio
 	hardware_pwm
+	hardware_spi
 )
 pico_add_extra_outputs(arducam_firmware)

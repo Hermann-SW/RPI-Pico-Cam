@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "arducam/arducam.h"
+#include "lib/st7735.h"
+#include "lib/fonts.h"
 uint8_t image_buf[324*324];
 uint8_t image_tmp[162*162];
 uint8_t image[96*96];
@@ -11,6 +13,10 @@ int main() {
 	//printf("\n\nBooted!\n");
 	gpio_init(PIN_LED);
 	gpio_set_dir(PIN_LED, GPIO_OUT);
+
+	ST7735_Init();
+	ST7735_DrawImage(0, 0, 80, 160, arducam_logo);
+
 	struct arducam_config config;
 	config.sccb = i2c0;
 	config.sccb_mode = I2C_MODE_16_8;
