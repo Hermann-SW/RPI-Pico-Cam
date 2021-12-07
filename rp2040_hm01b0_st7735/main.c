@@ -4,8 +4,7 @@
 #include "lib/st7735.h"
 #include "lib/fonts.h"
 uint8_t image_buf[324*324];
-uint8_t image_tmp[162*162];
-uint8_t image[96*96];
+uint8_t displayBuf[80*160*2];
 uint8_t header[2] = {0x55,0xAA};
 
 int main() {
@@ -37,8 +36,19 @@ int main() {
 
 	arducam_init(&config);
 	while (true) {
-		gpio_put(PIN_LED, !gpio_get(PIN_LED));
-		arducam_capture_frame(&config);
+	  gpio_put(PIN_LED, !gpio_get(PIN_LED));
+	  arducam_capture_frame(&config);
+
+	  uint16_t index = 0;
+	  for (int y = 0; y < 160; y++) {
+	    for (int x = 0; x < 80; x++) {
+              uint8_t c = image_buf[(2+320-2*y)*324+(2+40+2*x)];
+              uint16_t imageRGB   = ST7735_COLOR565(c, c, c);
+              displayBuf[index++] = (uint8_t)(imageRGB >> 8) & 0xFF;
+              displayBuf[index++] = (uint8_t)(imageRGB)&0xFF;
+            }
+	  }
+	  ST7735_DrawImage(0, 0, 80, 160, displayBuf);
 	}
 
 	return 0;

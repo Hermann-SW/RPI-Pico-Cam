@@ -41,4 +41,5 @@ int ESP1_TX         = 1;
 ## Copy the arducam_firmware.uf2 to pico
 
 ## test
+![IMAGE ALT TEXT](photos/20211207_202449.part.50pc.jpg)  
 ![IMAGE ALT TEXT](photos/20211124_204656.part.20pc.jpg)
