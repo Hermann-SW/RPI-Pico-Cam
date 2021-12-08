@@ -42,7 +42,7 @@ int ESP1_TX         = 1;
 
 ## Comments
 
-It turned out that "capture camera frame, then show on display" loop runs sqrt(2) times faster on core1 (higher processing framerate). In addition another factor 2 was achieved by going to the "safe" double frequency 250MHz overclocking. With that, now 15.6 frames per second get shown on display.
+It turned out that "capture camera frame, then show on display" loop runs sqrt(2) times faster on core1 (higher processing framerate). In addition another factor 2 was achieved by going to the "safe" double frequency 250MHz overclocking. With that, now 15.6 frames per second get shown on 160x80 display.
 
 ## test
 ![IMAGE ALT TEXT](photos/20211207_202449.part.50pc.jpg)  
