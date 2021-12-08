@@ -63,12 +63,18 @@ void core1_entry() {
 	}
 }
 
+#include "hardware/vreg.h"
+
 int main() {
   int loops=20;
   stdio_init_all();
   while (!tud_cdc_connected()) { sleep_ms(100); if (--loops==0) break;  }
 
   printf("tud_cdc_connected(%d)\n", tud_cdc_connected()?1:0);
+
+  vreg_set_voltage(VREG_VOLTAGE_1_30);
+  sleep_ms(1000);
+  set_sys_clock_khz(250000, true);
 
   multicore_launch_core1(core1_entry);
 
