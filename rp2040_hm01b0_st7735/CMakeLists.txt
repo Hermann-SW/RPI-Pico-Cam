@@ -25,5 +25,8 @@ target_link_libraries(arducam_firmware
 	hardware_pio
 	hardware_pwm
 	hardware_spi
+	pico_multicore
 )
+pico_enable_stdio_usb(arducam_firmware 1)
+
 pico_add_extra_outputs(arducam_firmware)
