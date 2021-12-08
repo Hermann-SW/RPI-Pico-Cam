@@ -40,6 +40,10 @@ int ESP1_TX         = 1;
 ```
 ## Copy the arducam_firmware.uf2 to pico
 
+## Comments
+
+It turned out that "capture camera frame, then show on display" loop runs sqrt(2) times faster on core1 (higher processing framerate). In addition another factor 2 was achieved by going to the "safe" double frequency 250MHz overclocking. With that, now 15.6 frames per second get shown on display.
+
 ## test
 ![IMAGE ALT TEXT](photos/20211207_202449.part.50pc.jpg)  
 ![IMAGE ALT TEXT](photos/20211207_220948.part.25pc.jpg)  
