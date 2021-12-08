@@ -39,6 +39,9 @@ int ESP1_TX         = 1;
     make 
 ```
 ## Copy the arducam_firmware.uf2 to pico
+```bash
+    cp arducam_firmware.uf2 /media/pi/RPI-RP2/
+```
 
 ## Comments
 
