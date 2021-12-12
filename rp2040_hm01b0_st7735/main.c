@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "pico/stdlib.h"
 #include <tusb.h>
 #include "pico/multicore.h"
@@ -9,9 +10,11 @@ uint8_t image_buf[324*324];
 uint8_t displayBuf[80*160*2];
 uint8_t header[2] = {0x55,0xAA};
 
-#define FLAG_VALUE 123
+int frames=0, freq=250000, t0, t1;
 
 void core1_entry() {
+        int frame = 0;
+
 	gpio_init(PIN_LED);
 	gpio_set_dir(PIN_LED, GPIO_OUT);
 
@@ -40,6 +43,12 @@ void core1_entry() {
 	while (true) {
 	  gpio_put(PIN_LED, !gpio_get(PIN_LED));
 	  arducam_capture_frame(&config);
+          ++frame;
+          if (frame==3)  t0=time_us_32();
+          else if (frame-frames==3) {
+            t1=time_us_32();
+            printf("%.2ffps\n", 1000000.0*frames/(t1-t0));
+          }
 
 	  uint16_t index = 0;
 	  for (int y = 0; y < 160; y++) {
@@ -56,6 +65,15 @@ void core1_entry() {
 
 #include "hardware/vreg.h"
 
+#define L 8
+unsigned char str[L+1];
+
+unsigned char *readLine() {
+  int u; unsigned char *p;
+  for(p=str, u=getchar_timeout_us(100000); u!='\r' && p-str<L; u=getchar_timeout_us(10000))  if (u>=0)  putchar(*p++=u);
+  *p = 0;  putchar('\n'); return str;
+}
+
 int main() {
   int loops=20;
   stdio_init_all();
@@ -63,9 +81,16 @@ int main() {
 
   printf("tud_cdc_connected(%d)\n", tud_cdc_connected()?1:0);
 
+  if (tud_cdc_connected()) {
+    getchar_timeout_us(100000);     // without 1st atoi(readLine()) returns 0
+ 
+    printf("clock speed [KHz]: ");            freq=atoi(readLine());
+    printf("fps frames: ");                   frames=atoi(readLine());
+  }
+
   vreg_set_voltage(VREG_VOLTAGE_1_30);
   sleep_ms(1000);
-  set_sys_clock_khz(250000, true);
+  set_sys_clock_khz(freq, true);
 
   multicore_launch_core1(core1_entry);
 
